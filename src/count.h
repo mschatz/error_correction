@@ -52,8 +52,8 @@ extern float gb_limit;
 //////////////////////////////////////////////////////////////////////
 // constants
 //////////////////////////////////////////////////////////////////////
-extern int COUNT;
-extern int LEN;
+extern long long COUNT;
+extern long long LEN;
 extern int BAD_CHAR;
 extern int PRINT_SIMPLE;
 extern const char * bintoascii;

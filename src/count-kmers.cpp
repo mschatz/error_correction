@@ -135,16 +135,22 @@ int  main (int argc, char * argv [])
   
   while(Fastq_Read(fp, s, tag, q)) {
     CountMers(s, mer_table);
+
+    if ((COUNT % 1000000) == 0)
+    {
+      cerr << COUNT << " sequences processed, " << LEN << " bp scanned" << endl;
+    }
+
     if(gb_limit > 0 && mer_table.size() > kmer_limit) {
       // print table
-      cerr << COUNT << " sequences processed, " << LEN << " bp scanned" << endl;
+      cerr << "Memory Limit reached after " << COUNT << " sequences processed, " << LEN << " bp scanned" << endl;
       PrintMers(mer_table, min_count);
       // clear table
       mer_table.clear();
     }
   }
 
-  cerr << COUNT << " sequences processed, " << LEN << " bp scanned" << endl;
+  cerr << "TOTAL: " << COUNT << " sequences processed, " << LEN << " bp scanned" << endl;
   
   if (BAD_CHAR)
     {
