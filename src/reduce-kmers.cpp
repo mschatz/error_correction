@@ -2,6 +2,9 @@
 #include  <iostream>
 using namespace std;
 
+long long CNT_ALL = 0;
+long long CNT_PRINTED = 0;
+
 ////////////////////////////////////////////////////////////////////////////////
 // reduce-kmers
 //
@@ -16,9 +19,14 @@ int  main (int argc, char * argv [])
   // read initial line
   cin >> mykmer;
   cin >> mycount;
+
+  CNT_ALL++;
   
-  while(cin >> kmer) {
+  while(cin >> kmer) 
+  {
     cin >> count;
+    
+    CNT_ALL++;
     
     // if same as last, increment count
     if(kmer == mykmer) {
@@ -26,7 +34,9 @@ int  main (int argc, char * argv [])
       
       // else print last, initialize new
     } else {
+      CNT_PRINTED++;
       cout << mykmer << "\t" << mycount << endl;
+
       mykmer = kmer;
       mycount = count;
     }
@@ -34,6 +44,9 @@ int  main (int argc, char * argv [])
   
   // print last
   cout << mykmer << "\t" << mycount << endl;
+  CNT_PRINTED++;
+
+  cerr << "Printed " << CNT_PRINTED << " of " << CNT_ALL << endl;
   
   return 0;
 }
