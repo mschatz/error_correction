@@ -15,13 +15,13 @@ int bithash::k;
 ////////////////////////////////////////////////////////////
 // options
 ////////////////////////////////////////////////////////////
-const static char* myopts = "m:k:c:o:";
+const static char* myopts = "m:k:c:o:h";
 // -m, kmer count file
 static char* merf = NULL;
 // -k, kmer size
 static int k = 0;
 // -c, kmer count trusted cutoff
-static double cutoff = NULL;
+static double cutoff = 0;
 // -a, AT cutoff
 static char* ATcutf = NULL;
 // -o, bithash output file
@@ -71,6 +71,10 @@ static void parse_command_line(int argc, char **argv) {
   // parse args
   while(!errflg && ((ch = getopt(argc, argv, myopts)) != EOF)) {
     switch(ch) {
+    case 'h':
+      errflg = true;
+      break;
+
     case 'm':
       merf = strdup(optarg);
       break;
@@ -111,12 +115,11 @@ static void parse_command_line(int argc, char **argv) {
   // always returns an error
 
   // return errors
-  /*
-  if(errflg || optind != argc-1) {
+  if(errflg)
+  {
     Usage(argv[0]);
     exit(EXIT_FAILURE);
   }
-  */
 
   ////////////////////////////////////////
   // correct user input errors
