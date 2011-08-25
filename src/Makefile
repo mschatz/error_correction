@@ -8,7 +8,7 @@ EXE_FILES = correct count-kmers count-qmers count_qmers reduce-kmers reduce-qmer
 all: $(EXE_FILES)
 
 clean:
-	-rm $(EXE_FILES) *.o
+	-rm -f $(EXE_FILES) *.o
 
 correct: correct.cpp Read.o bithash.o edit.o libgzstream.a
 	$(CC) $(CFLAGS) correct.cpp Read.o bithash.o edit.o -o correct $(LDFLAGS)
