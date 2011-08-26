@@ -139,6 +139,8 @@ static void  Usage
 	   " -u\n"
 	   "    Output errors reads even if they can't be corrected,\n"
 	   "    maintaining paired end reads.\n"
+             " -C\n"
+             "   contrail-mode: output corrected reads as name \\t sequence\n"
 	   " --headers\n"
 	   "    Output only the original read headers without\n"
 	   "    correction messages\n"
