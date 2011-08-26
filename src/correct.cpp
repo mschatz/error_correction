@@ -72,7 +72,7 @@ static bool overwrite_temp = true;
 
 // constants
 #define TESTING false
-static char* nts = "ACGTN";
+static const char* nts = "ACGTN";
 //unsigned int chunks_per_thread = 200;
 
  // to collect stats
@@ -524,7 +524,7 @@ static void correct_reads(string fqf, int pe_code, bithash * trusted, vector<str
 
       if(overwrite_temp || stat(toutf.c_str(), &st_file_info) == -1) {
 	ofstream reads_out(toutf.c_str());
-	//cout << toutf << endl;
+	//cerr << toutf << endl;
 
 	// output log
 	string tlogf = toutf + ".log";
@@ -535,11 +535,11 @@ static void correct_reads(string fqf, int pe_code, bithash * trusted, vector<str
 
 	unsigned long long tcount = 0;
 	while(getline(reads_in, header)) {
-	  //cout << tid << " " << header << endl;
+	  //cerr << tid << " " << header << endl;
 	
 	  // get sequence
 	  getline(reads_in, ntseq);
-	  //cout << ntseq << endl;
+	  //cerr << ntseq << endl;
 	
 	  // convert ntseq to iseq
 	  vector<unsigned int> iseq;
@@ -550,9 +550,9 @@ static void correct_reads(string fqf, int pe_code, bithash * trusted, vector<str
 
 	  // get quality values
 	  getline(reads_in,mid);
-	  //cout << mid << endl;
+	  //cerr << mid << endl;
 	  getline(reads_in,strqual);
-	  //cout << strqual << endl;
+	  //cerr << strqual << endl;
 
 	  vector<int> untrusted;
 
@@ -658,11 +658,11 @@ static void learn_errors(string fqf, bithash * trusted, vector<streampos> & star
       
       unsigned long long tcount = 0;
       while(getline(reads_in, header)) {
-	//cout << header << endl;
+	//cerr << header << endl;
 	
 	// get sequence
 	getline(reads_in, ntseq);
-	//cout << ntseq << endl;
+	//cerr << ntseq << endl;
 	
 	// convert ntseq to iseq
 	vector<unsigned int> iseq;
@@ -673,9 +673,9 @@ static void learn_errors(string fqf, bithash * trusted, vector<streampos> & star
 		
 	// get quality values
 	getline(reads_in,strqual);
-	//cout << strqual << endl;
+	//cerr << strqual << endl;
 	getline(reads_in,strqual);
-	//cout << strqual << endl;
+	//cerr << strqual << endl;
 
 	vector<int> untrusted;
 
@@ -770,6 +770,7 @@ int main(int argc, char **argv) {
 
   // get kmer counts
   if(merf != NULL) {
+    cerr << "Loading kmer counts from: " << merf << endl;
     string merf_str(merf);
     if(ATcutf != NULL) {
       if(merf_str.substr(merf_str.size()-3) == ".gz") {
@@ -791,13 +792,15 @@ int main(int argc, char **argv) {
 
   // saved bithash
   } else if(bithashf != NULL) {
+    cerr << "Loading bithash from: " << bithashf << endl;
     if(strcmp(bithashf,"-") == 0) {
       cerr << "Saved bithash cannot be piped in.  Please specify file." << endl;
       exit(EXIT_FAILURE);
     } else
       trusted->binary_file_input(bithashf, atgc);
   }  
-  cout << trusted->num_kmers() << " trusted kmers" << endl;
+
+  cerr << trusted->num_kmers() << " trusted kmers" << endl;
 
   double prior_prob[4];
   prior_prob[0] = (double)atgc[0] / (double)(atgc[0]+atgc[1]) / 2.0;
@@ -805,8 +808,8 @@ int main(int argc, char **argv) {
   prior_prob[2] = prior_prob[1];
   prior_prob[3] = prior_prob[0];
   
-  //cout << "AT: " << atgc[0] << " GC: " << atgc[1] << endl;
-  cout << "AT% = " << (2*prior_prob[0]) << endl;
+  //cerr << "AT: " << atgc[0] << " GC: " << atgc[1] << endl;
+  cerr << "AT% = " << (2*prior_prob[0]) << endl;
 
   // make list of files
   vector<string> fastqfs;
@@ -818,7 +821,7 @@ int main(int argc, char **argv) {
   bool zip;
   for(int f = 0; f < fastqfs.size(); f++) {
     fqf = fastqfs[f];
-    cout << fqf << endl;
+    cerr << fqf << " " << pairedend_codes[f] << endl;
 
     // unzip
     if(fqf.substr(fqf.size()-3) == ".gz") {
