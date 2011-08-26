@@ -295,6 +295,8 @@ void bithash::binary_file_input(char* inf, unsigned long long atgc[]) {
 
   for(unsigned long long b = 0; b < mysize/buffersize; b++) {
 
+    cerr << "loading bit batch: " << b << " of " << (mysize/buffersize) << endl;
+
     // read content of ifs
     ifs.read (buffer, buffersize);
 
