@@ -261,7 +261,7 @@ def jellyfish(readsf, reads_listf, k, ctsf, quality_scale, hash_size, proc):
     if ctsf[-4:] == 'qcts':
         p = subprocess.Popen('%s/jellyfish qdump -c %s.dbm > %s' % (jellyfish_dir, output_pre, ctsf), shell=True)
     else:
-        p = subprocess.Popen('%s/jellyfish stats -c %s.dbm > %s' % (jellyfish_dir, output_pre, ctsf), shell=True)
+        p = subprocess.Popen('%s/jellyfish dump -c %s.dbm > %s' % (jellyfish_dir, output_pre, ctsf), shell=True)
     os.waitpid(p.pid, 0)
 
 
